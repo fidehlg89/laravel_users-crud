@@ -31,6 +31,9 @@
     </noscript>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
 
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
     <!-- Styles -->
     <style>
         /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
@@ -428,33 +431,37 @@
 </head>
 
 <body>
-    <nav class="flex py-4 bg-orange-50 shadow-md text-black-500">
-        <div class="w-1/2 flex items-center px-12 mr-auto">
-            <a href="/" class="text-2x1 font-semibold">Inicio</a>
-        </div>
+    @include('layouts.navbar')
 
-        <ul class="w-1/2 px-16 ml-auto flex justify-end pt-1">
-            @if (auth()->check())
-                <li class="mx-8">
-                    <p class="text-xl">Welcome <b>{{ auth()->user()->name }}</b></p>
-                </li>
-                <li class="mx-6">
-                    <a href="{{ route('login.destroy') }}" class="font-semibold">Log Out</a>
-                </li>
-            @else
-                <li class="mx-6">
-                    <a href="{{ route('login.index') }}" class="font-semibold">Log In</a>
-                </li>
-                <li class="mx-6">
-                    <a href="{{ route('register.index') }}" class="font-semibold">Registro</a>
-                </li>
-            @endif
-        </ul>
-    </nav>
-
-    <div class="max-w-6xl mx-auto py-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-4 sm:px-6 lg:px-8">
         @yield('content')
     </div>
+
+    @livewireScripts
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            Livewire.hook('component.initialized', (component) => {})
+
+            Livewire.hook('element.initialized', (el, component) => {})
+
+            Livewire.hook('element.updating', (fromEl, toEl, component) => {})
+
+            Livewire.hook('element.updated', (el, component) => {})
+
+            Livewire.hook('element.removed', (el, component) => {})
+
+            Livewire.hook('message.sent', (message, component) => {})
+
+            Livewire.hook('message.failed', (message, component) => {})
+
+            Livewire.hook('message.received', (message, component) => {})
+
+            Livewire.hook('message.processed', (message, component) => {})
+
+        });
+    </script>
 
 </body>
 

@@ -4,28 +4,62 @@
 
 @section('content')
 
-<div class="block mx-auto my-12 p-8 bg-white w-1/3 border border-gray-200 rounded-lg shadow-lg">
-    
-    <h1 class="text-2xl text-center font-bold">Registro</h1>
+    <div class="min-h-full flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-4">
+            <div>
+                <img class="mx-auto w-auto"
+                    src="https://www.martelexpresssa.com/wp-content/uploads/2019/08/LOGO-MARTELEXPRESS.png" alt="Workflow">
+                <h2 class="mt-4 text-center text-3xl font-extrabold text-gray-900">Formulario de Registro</h2>
+            </div>
+            <form action="" method="POST">
+                @csrf
+                <div class="rounded-md shadow-sm space-y-4">
+                    <div>
+                        <input id="name" name="name" type="text" autocomplete="name" required
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Nombre">
+                    </div>
+                    @error('name')
+                        <p class="appearance-none relative block border border-red-500 rounded-md bg-red-300 w-full text-red-600 px-3 py-2 sm:text-sm">* {{ $message }}
+                        </p>
+                    @enderror
+                    <div>
+                        <input id="app" name="app" type="text" autocomplete="name" required
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Apellidos">
+                    </div>
+                    <div>
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Correo">
+                    </div>
+                    @error('email')
+                        <p class="appearance-none relative block border border-red-500 rounded-md bg-red-300 w-full text-red-600 px-3 py-2 sm:text-sm">*
+                            {{ $message }}</p>
+                    @enderror
+                    <div>
+                        <input id="password" name="password" type="password" autocomplete="current-password" required
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Contraseña">
+                    </div>
+                    @error('password')
+                        <p class="appearance-none relative block border border-red-500 rounded-md bg-red-300 w-full text-red-600 px-3 py-2 sm:text-sm">*
+                            {{ $message }}</p>
+                    @enderror
+                    <div>
+                        <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="current-password" required
+                            class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Confirme su Contraseña">
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">                        
+                        Registrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
-    <form class="mt-4" action="" method="POST">
-        @csrf
-        <input type="text" id="name" name="name"  placeholder="Nombre" class="border bg-gray-200 rounded-md w-full text-lg p-2 my-2"/>
-        @error('name')
-            <p class="border border-red-500 rounded-md bg-red-300 w-full text-red-600 p-2 my-2">* {{ $message }}</p>    
-        @enderror 
-        <input type="email" id="email" name="email"  placeholder="Email" class="border bg-gray-200 rounded-md w-full text-lg p-2 my-2"/>
-        @error('email')
-            <p class="border border-red-500 rounded-md bg-red-300 w-full text-red-600 p-2 my-2">* {{ $message }}</p>    
-        @enderror 
-        <input type="password" id="password" name="password" placeholder="Password" class="border bg-gray-200 rounded-md w-full text-lg p-2 my-2"/>
-        @error('password')
-            <p class="border border-red-500 rounded-md bg-red-300 w-full text-red-600 p-2 my-2">* {{ $message }}</p>    
-        @enderror 
-        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirme su Password" class="border bg-gray-200 rounded-md w-full text-lg p-2 my-2"/>
-        <button type="submit" class="bg-red-800 rounded-md py-2 my-3 w-full text-lg text-white">Enviar</button>
-    </form>
-
-</div>
-    
 @endsection

@@ -1,78 +1,159 @@
 @extends('layouts.app')
 
-@section('title', 'Clients')
+@section('title', 'Clientes')
 
 @section('content')
+    <!-- This example requires Tailwind CSS v2.0+ -->
+    <div class="grid">
+        <div class="flex justify-between">
+            <div class="flex items-center">
+                <h3 class="text-lg font-medium leading-6 text-gray-900 mr-4">Listado de Clientes</h3>
+                <a href="{{ route('clientes.create') }}"
+                    class="py-2 px-4 mr-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Nuevo
+                    Cliente</a>
+            </div>
 
-    <?php $headers = ['Client', 'No. de Carnet de Identidad', 'Telefono', 'Direccion', 'Acciones']; ?>
-    <div class="flex flex-col">
-        <div class="overflow-x-auto shadow-md sm:rounded-lg">
-            <div class="min-w-full align-middle">
-                <div class="block mx-auto">
-                    <form action="{{ route('clientes.index') }}" method="GET">
-                        <input type="search" name="search-text" id="search-text" value="{{ $search_text }}"
-                            placeholder="Buscar" class="border bg-gray-200 rounded-md text-lg p-2 my-2" />
+            <div class="px-4 sm:px-0">
+                <form action="{{ route('clientes.index') }}" method="GET">
+                    <div class="flex">
+                        {{-- Input search --}}
+                        <div class="relative rounded-md shadow-sm">
+                            <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                                <span class="text-gray-500 sm:text-sm">
+                                    <svg width="24" height="24" fill="none" aria-hidden="true" class="mr-3 flex-none">
+                                        <path d="m19 19-3.5-3.5" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <circle cx="11" cy="11" r="6" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"></circle>
+                                    </svg>
+                                </span>
+                            </div>
+                            <input type="search" name="search-text" id="price" value="{{ $search_text }}"
+                                placeholder="Buscar"
+                                class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-9 pr-12 sm:text-sm border-gray-300 rounded-md">
 
+                        </div>
+                        {{-- End input search --}}
                         <input type="submit" value="Buscar"
-                            class="border bg-red-800 rounded-md text-lg p-2 my-2 text-white cursor-pointer hover:bg-red-700" />
+                            class="group relative flex items-center py-2 px-4 mx-1 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" />
 
-                        <a href="{{ route('clientes.create') }}"
-                            class="border bg-red-800 rounded-md text-lg p-2 my-2 text-white cursor-pointer hover:bg-red-700">Nuevo</a>
+                    </div>
+                </form>
+                {{-- <p class="mt-1 text-sm text-gray-600">This information will be displayed publicly so be careful what you share.</p> --}}
+            </div>
 
-                    </form>
-                </div>
-                <div class="overflow-hidden ">
-                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-700">
-                        <thead class="bg-gray-100 dark:bg-gray-700">
+        </div>
+
+        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 space-y-4">
+
+                {{-- Clients List --}}
+                <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
                             <tr>
                                 @foreach ($headers as $header)
-                                    <th scope="col"
-                                        class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                        {{ $header }}
-                                    </th>
+                                    @if ($header === end($headers))
+                                        <th scope="col"
+                                            class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $header }}
+                                        </th>
+                                    @else
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            {{ $header }}
+                                        </th>
+                                    @endif
                                 @endforeach
                             </tr>
                         </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
+                        <tbody class="bg-white divide-y divide-gray-200">
                             @if (count($clients) <= 0)
                                 <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td colspan="{{ count($headers) }}"
-                                        class="py-4 px-6text-sm font-medium text-gray-900 whitespace-nowrap text-center dark:text-white">
-                                        No existen coincidencias {{ $search_text }}</td>
+                                    <td colspan="{{ count($headers) }}" class="px-6 py-4 whitespace-nowrap text-center">
+                                        <div class="flex justify-center flex-col">
+                                            <span>Sin coincidencias {{ $search_text ? 'para' : '' }}
+                                                {{ $search_text }}</span>
+                                            <a href="{{ route('clientes.index') }}"
+                                                class="text-indigo-600 hover:text-indigo-900">Recargar</a>
+                                        </div>
+                                    </td>
                                 </tr>
                             @else
                                 @foreach ($clients as $client)
-                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                        <td
-                                            class="py-4 px-6text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $client->name . ' ' . $client->app }}</td>
-                                        <td
-                                            class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $client->ci }}</td>
-                                        <td
-                                            class="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                                            {{ $client->phone }}</td>
-                                        <td
-                                            class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $client->address }}</td>
-                                        <td class="py-4 px-6 text-sm font-medium whitespace-nowrap">
-                                            <a href="{{ route('clientes.edit', $client->id) }}"
-                                                class="text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                            <span>|</span>
-                                            <form action="{{ route('clientes.destroy', $client->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="submit" class="text-blue-600 dark:text-blue-500 hover:underline" value="Eliminar">
-                                            </form>
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700 text-sm ">
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->fullName() }}
+                                        </td>
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->ci }}
+                                        </td>
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->phone }}
+                                        </td>
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->address }}
+                                        </td>
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->city->name }}
+                                        </td>
+                                        <td class="px-6 whitespace-nowrap">
+                                            {{ $client->city->state->name }}
+                                        </td>
+                                        <td>
+                                            <div class="flex px-6 py-2 whitespace-nowrap text-sm justify-center font-medium">
+                                                <button type="button"
+                                                    class="focus:outline-none openClientView text-white text-sm p-2 rounded-md bg-green-500 
+                                                    hover:bg-green-600 hover:shadow-lg mr-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                                    </svg>
+                                                </button>
+                                                <a href="{{ route('clientes.edit', $client->id) }}"
+                                                    class="focus:outline-none text-white text-sm p-2 rounded-md bg-yellow-500 hover:bg-yellow-600 hover:shadow-lg mr-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2"
+                                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                    </svg>
+                                                </a>
+                                                <form action="{{ route('clientes.destroy', $client->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                        class="focus:outline-none 
+                                                        text-white text-sm p-2 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-lg">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                stroke-width="2"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             @endif
                         </tbody>
                     </table>
-                    {{ $clients->links('pagination::tailwind') }}
+                    @isset($client)
+                        @include('clientes.view')
+                    @endisset
                 </div>
+                {{-- End clients List --}}
             </div>
+        </div>
+        <div class="w-full">
+            {{ $clients->links() }}
         </div>
     </div>
 
