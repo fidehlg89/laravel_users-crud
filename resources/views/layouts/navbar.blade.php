@@ -21,10 +21,6 @@
                     @if(auth()->check())
                         <a href="/usuarios" class="{{ Route::is('usuarios.index') ? 'bg-gray-900 text-white':
                         'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Usuarios</a>
-                        <a href="/clientes" class="{{ Route::is('clientes.index') ? 'bg-gray-900 text-white':
-                        'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Clientes</a>
-                        <a href="/envios" class="{{ Route::is('envios.index') ? 'bg-gray-900 text-white':
-                        'text-gray-300 hover:bg-gray-700 hover:text-white' }} px-3 py-2 rounded-md text-sm font-medium">Envios</a>
                     @endif
 
                     

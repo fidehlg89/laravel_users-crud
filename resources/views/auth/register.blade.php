@@ -7,8 +7,6 @@
     <div class="min-h-full flex items-center justify-center py-4 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-4">
             <div>
-                <img class="mx-auto w-auto"
-                    src="https://www.martelexpresssa.com/wp-content/uploads/2019/08/LOGO-MARTELEXPRESS.png" alt="Workflow">
                 <h2 class="mt-4 text-center text-3xl font-extrabold text-gray-900">Formulario de Registro</h2>
             </div>
             <form action="" method="POST">
